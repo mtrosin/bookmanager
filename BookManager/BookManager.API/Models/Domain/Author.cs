@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Hosting;
-
-namespace BookManager.API.Models.Domain
+﻿namespace BookManager.API.Models.Domain
 {
     public class Author
     {

@@ -3,16 +3,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookManager.API.Data
 {
-    public class BookManagerDbContext: DbContext
+    public class BookManagerDbContext : DbContext
     {
-        public BookManagerDbContext(DbContextOptions dbContextOptions): base(dbContextOptions) 
+        public BookManagerDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
-            
+
         }
 
         public DbSet<Author> Authors { get; set; }
 
         public DbSet<Book> Books { get; set; }
+
+        public DbSet<Image> Images { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -41,8 +43,8 @@ namespace BookManager.API.Data
 
             var books = new List<Book>()
             {
-                new Book() 
-                { 
+                new Book()
+                {
                     Id = 1,
                     Title = "Book 1",
                     AuthorId = 1,

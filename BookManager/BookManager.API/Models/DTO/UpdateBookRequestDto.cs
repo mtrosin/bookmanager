@@ -1,6 +1,4 @@
-﻿using BookManager.API.Models.Domain;
-
-namespace BookManager.API.Models.DTO
+﻿namespace BookManager.API.Models.DTO
 {
     public class UpdateBookRequestDto
     {

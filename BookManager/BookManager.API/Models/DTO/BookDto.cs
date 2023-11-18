@@ -1,4 +1,5 @@
 ﻿using BookManager.API.Models.Domain;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookManager.API.Models.DTO
 {

@@ -48,7 +48,7 @@ namespace BookManager.API.Repositories
         {
             var existingAuthor = await dbContext.Authors.FirstOrDefaultAsync(x => x.Id == id);
 
-            if(existingAuthor == null)
+            if (existingAuthor == null)
             {
                 return null;
             }

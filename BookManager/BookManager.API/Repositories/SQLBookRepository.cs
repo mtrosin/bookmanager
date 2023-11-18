@@ -1,7 +1,6 @@
 ﻿using BookManager.API.Data;
 using BookManager.API.Models.Domain;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace BookManager.API.Repositories
 {

@@ -4,7 +4,7 @@ using BookManager.API.Models.DTO;
 
 namespace BookManager.API.Mappings
 {
-    public class AutoMapperProfiles:Profile
+    public class AutoMapperProfiles : Profile
     {
         public AutoMapperProfiles()
         {

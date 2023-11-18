@@ -68,7 +68,7 @@ namespace BookManager.API.Controllers
 
             authorDomainModel = await authorRepository.UpdateAsync(id, authorDomainModel);
 
-            if(authorDomainModel == null)
+            if (authorDomainModel == null)
             {
                 return NotFound();
             }
@@ -82,7 +82,7 @@ namespace BookManager.API.Controllers
         {
             var authorDomainModel = await authorRepository.DeleteAsync(id);
 
-            if(authorDomainModel == null) 
+            if (authorDomainModel == null)
             {
                 return NotFound();
             }
