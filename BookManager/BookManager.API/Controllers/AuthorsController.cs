@@ -1,10 +1,12 @@
-﻿using BookManager.API.Data;
+﻿using AutoMapper;
+using BookManager.API.Data;
 using BookManager.API.Models.Domain;
 using BookManager.API.Models.DTO;
 using BookManager.API.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace BookManager.API.Controllers
 {
@@ -14,11 +16,14 @@ namespace BookManager.API.Controllers
     {
         private readonly BookManagerDbContext dbContext;
         private readonly IAuthorRepository authorRepository;
+        private readonly IMapper mapper;
 
-        public AuthorsController(BookManagerDbContext dbContext, IAuthorRepository authorRepository)
+        public AuthorsController(BookManagerDbContext dbContext, IAuthorRepository authorRepository,
+            IMapper mapper)
         {
             this.dbContext = dbContext;
             this.authorRepository = authorRepository;
+            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -26,19 +31,7 @@ namespace BookManager.API.Controllers
         {
             var authorsDomainModel = await authorRepository.GetAllAsync();
 
-            List<AuthorDto> authorsDto = new List<AuthorDto>();
-            foreach (Author authorDomainModel in authorsDomainModel)
-            {
-                authorsDto.Add(
-                    new AuthorDto()
-                    {
-                        Id = authorDomainModel.Id,
-                        Name = authorDomainModel.Name,
-                    }
-                );
-            }
-
-            return Ok(authorsDto);
+            return Ok(mapper.Map<List<AuthorDto>>(authorsDomainModel));
         }
 
         [HttpGet]
@@ -52,30 +45,17 @@ namespace BookManager.API.Controllers
                 return NotFound();
             }
 
-            AuthorDto authorDto = new AuthorDto
-            {
-                Id = authorDomainModel.Id,
-                Name = authorDomainModel.Name,
-            };
-
-            return Ok(authorDto);
+            return Ok(mapper.Map<AuthorDto>(authorDomainModel));
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] AddAuthorRequestDto addAuthorRequestDto)
         {
-            var authorDomainModel = new Author
-            {
-                Name = addAuthorRequestDto.Name,
-            };
+            var authorDomainModel = mapper.Map<Author>(addAuthorRequestDto);
 
             authorDomainModel = await authorRepository.CreateAsync(authorDomainModel);
 
-            AuthorDto authorDto = new AuthorDto
-            {
-                Id = authorDomainModel.Id, 
-                Name = authorDomainModel.Name,
-            };
+            AuthorDto authorDto = mapper.Map<AuthorDto>(authorDomainModel);
 
             return CreatedAtAction(nameof(GetById), new { id = authorDto.Id }, authorDto);
         }
@@ -84,10 +64,7 @@ namespace BookManager.API.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateAuthorRequestDto updateAuthorRequestDto)
         {
-            var authorDomainModel = new Author
-            {
-                Name = updateAuthorRequestDto.Name,
-            };
+            var authorDomainModel = mapper.Map<Author>(updateAuthorRequestDto);
 
             authorDomainModel = await authorRepository.UpdateAsync(id, authorDomainModel);
 
@@ -96,13 +73,7 @@ namespace BookManager.API.Controllers
                 return NotFound();
             }
 
-            AuthorDto authorDto = new AuthorDto
-            {
-                Id = authorDomainModel.Id,
-                Name = authorDomainModel.Name,
-            };
-
-            return Ok(authorDto);
+            return Ok(mapper.Map<AuthorDto>(authorDomainModel));
         }
 
         [HttpDelete]
@@ -116,13 +87,7 @@ namespace BookManager.API.Controllers
                 return NotFound();
             }
 
-            var authorDto = new AuthorDto
-            {
-                Id = authorDomainModel.Id,
-                Name = authorDomainModel.Name,
-            };
-
-            return Ok(authorDto);
+            return Ok(mapper.Map<AuthorDto>(authorDomainModel));
         }
     }
 }

@@ -1,4 +1,5 @@
 using BookManager.API.Data;
+using BookManager.API.Mappings;
 using BookManager.API.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,8 @@ builder.Services.AddDbContext<BookManagerDbContext>(options =>
 );
 
 builder.Services.AddScoped<IAuthorRepository, SQLAuthorRepository>();
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 var app = builder.Build();
 
