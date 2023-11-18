@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
+using BookManager.API.CustomActionFilters;
 using BookManager.API.Data;
 using BookManager.API.Models.Domain;
 using BookManager.API.Models.DTO;
 using BookManager.API.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookManager.API.Controllers
@@ -47,6 +47,7 @@ namespace BookManager.API.Controllers
         }
 
         [HttpPost]
+        [ValidateModel]
         public async Task<IActionResult> Create([FromBody] AddBookRequestDto addBookRequestDto)
         {
             var bookDomainModel = mapper.Map<Book>(addBookRequestDto);
@@ -59,6 +60,7 @@ namespace BookManager.API.Controllers
         }
 
         [HttpPut]
+        [ValidateModel]
         [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateBookRequestDto updateBookRequestDto)
         {

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BookManager.API.CustomActionFilters;
 using BookManager.API.Data;
 using BookManager.API.Models.Domain;
 using BookManager.API.Models.DTO;
@@ -46,6 +47,7 @@ namespace BookManager.API.Controllers
         }
 
         [HttpPost]
+        [ValidateModel]
         public async Task<IActionResult> Create([FromBody] AddAuthorRequestDto addAuthorRequestDto)
         {
             var authorDomainModel = mapper.Map<Author>(addAuthorRequestDto);
@@ -58,6 +60,7 @@ namespace BookManager.API.Controllers
         }
 
         [HttpPut]
+        [ValidateModel]
         [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateAuthorRequestDto updateAuthorRequestDto)
         {
