@@ -1,4 +1,5 @@
 using BookManager.API.Data;
+using BookManager.API.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<BookManagerDbContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("BookManagerConnectionString"))
 );
+
+builder.Services.AddScoped<IAuthorRepository, SQLAuthorRepository>();
 
 var app = builder.Build();
 
