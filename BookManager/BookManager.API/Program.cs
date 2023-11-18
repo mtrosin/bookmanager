@@ -17,6 +17,7 @@ builder.Services.AddDbContext<BookManagerDbContext>(options =>
 );
 
 builder.Services.AddScoped<IAuthorRepository, SQLAuthorRepository>();
+builder.Services.AddScoped<IBookRepository, SQLBookRepository>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 

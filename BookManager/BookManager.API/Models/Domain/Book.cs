@@ -1,4 +1,7 @@
-﻿namespace BookManager.API.Models.Domain
+﻿using Microsoft.Extensions.Hosting;
+using System.Reflection.Metadata;
+
+namespace BookManager.API.Models.Domain
 {
     public class Book
     {
@@ -8,6 +11,6 @@
         public int Year {  get; set; }
         public string? CoverImage { get; set; }
 
-        public Author Author { get; set; }
+        public virtual Author Author { get; set; }
     }
 }

@@ -11,6 +11,10 @@ namespace BookManager.API.Mappings
             CreateMap<Author, AuthorDto>().ReverseMap();
             CreateMap<AddAuthorRequestDto, Author>().ReverseMap();
             CreateMap<UpdateAuthorRequestDto, Author>().ReverseMap();
+
+            CreateMap<Book, BookDto>().ReverseMap();
+            CreateMap<AddBookRequestDto, Book>().ReverseMap();
+            CreateMap<UpdateBookRequestDto, Book>().ReverseMap();
         }
     }
 }
