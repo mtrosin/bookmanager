@@ -3,10 +3,7 @@ using BookManager.API.Data;
 using BookManager.API.Models.Domain;
 using BookManager.API.Models.DTO;
 using BookManager.API.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace BookManager.API.Controllers
 {
