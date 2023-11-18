@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookManager.API.Migrations
 {
     [DbContext(typeof(BookManagerDbContext))]
-    [Migration("20231118000021_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20231118175226_migrations")]
+    partial class migrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,9 @@ namespace BookManager.API.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -39,6 +42,23 @@ namespace BookManager.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Authors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "AuthorTest1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "AuthorTest2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "AuthorTest3"
+                        });
                 });
 
             modelBuilder.Entity("BookManager.API.Models.Domain.Book", b =>
@@ -67,17 +87,48 @@ namespace BookManager.API.Migrations
                     b.HasIndex("AuthorId");
 
                     b.ToTable("Books");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AuthorId = 1,
+                            CoverImage = "default.png",
+                            Title = "Book 1",
+                            Year = 2010
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AuthorId = 2,
+                            CoverImage = "default.png",
+                            Title = "Book 2",
+                            Year = 2011
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AuthorId = 3,
+                            CoverImage = "default.png",
+                            Title = "Book 3",
+                            Year = 2012
+                        });
                 });
 
             modelBuilder.Entity("BookManager.API.Models.Domain.Book", b =>
                 {
                     b.HasOne("BookManager.API.Models.Domain.Author", "Author")
-                        .WithMany()
+                        .WithMany("Books")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("BookManager.API.Models.Domain.Author", b =>
+                {
+                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }
