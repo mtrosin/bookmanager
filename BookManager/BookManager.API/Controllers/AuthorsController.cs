@@ -3,6 +3,7 @@ using BookManager.API.Models.Domain;
 using BookManager.API.Models.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookManager.API.Controllers
 {
@@ -17,9 +18,9 @@ namespace BookManager.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            List<Author> authorsDomainModel = dbContext.Authors.ToList();
+            var authorsDomainModel = await dbContext.Authors.ToListAsync();
 
             List<AuthorDto> authorsDto = new List<AuthorDto>();
             foreach (Author authorDomainModel in authorsDomainModel)
@@ -38,9 +39,9 @@ namespace BookManager.API.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
-        public IActionResult GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            Author authorDomainModel = dbContext.Authors.Find(id);
+            var authorDomainModel = await dbContext.Authors.FirstOrDefaultAsync(x => x.Id == id);
 
             if(authorDomainModel == null)
             {
@@ -57,15 +58,15 @@ namespace BookManager.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] AddAuthorRequestDto addAuthorRequestDto)
+        public async Task<IActionResult> Create([FromBody] AddAuthorRequestDto addAuthorRequestDto)
         {
-            Author authorDomainModel = new Author
+            var authorDomainModel = new Author
             {
                 Name = addAuthorRequestDto.Name,
             };
 
-            dbContext.Authors.Add(authorDomainModel);
-            dbContext.SaveChanges();
+            await dbContext.Authors.AddAsync(authorDomainModel);
+            await dbContext.SaveChangesAsync();
 
             AuthorDto authorDto = new AuthorDto
             {
@@ -78,9 +79,9 @@ namespace BookManager.API.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
-        public IActionResult Update([FromRoute] int id, [FromBody] UpdateAuthorRequestDto updateAuthorRequestDto)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateAuthorRequestDto updateAuthorRequestDto)
         {
-            Author authorDomainModel = dbContext.Authors.Find(id);
+            var authorDomainModel = await dbContext.Authors.FirstOrDefaultAsync(x => x.Id == id);
 
             if(authorDomainModel == null)
             {
@@ -89,7 +90,7 @@ namespace BookManager.API.Controllers
 
             authorDomainModel.Name = updateAuthorRequestDto.Name;
 
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
 
             AuthorDto authorDto = new AuthorDto
             {
@@ -102,9 +103,9 @@ namespace BookManager.API.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
-        public IActionResult Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            Author authorDomainModel = dbContext.Authors.Find(id);
+            var authorDomainModel = await dbContext.Authors.FirstOrDefaultAsync(x => x.Id == id);
 
             if(authorDomainModel == null) 
             {
@@ -112,7 +113,7 @@ namespace BookManager.API.Controllers
             }
 
             dbContext.Authors.Remove(authorDomainModel);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
 
             return Ok();
         }
