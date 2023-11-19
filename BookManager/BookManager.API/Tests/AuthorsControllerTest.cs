@@ -5,6 +5,7 @@ using BookManager.API.Models.Domain;
 using BookManager.API.Models.DTO;
 using BookManager.API.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using Xunit;
 
@@ -19,7 +20,11 @@ namespace BookManager.API.Tests
 
         public AuthorsControllerTest()
         {
-            this.dbContextMock = new Mock<BookManagerDbContext>();
+            var dbContextOptions = new DbContextOptionsBuilder<BookManagerDbContext>()
+                    .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()) // You can use an in-memory database for testing
+                    .Options;
+
+            this.dbContextMock = new Mock<BookManagerDbContext>(dbContextOptions);
             this.authorRepositoryMock = new Mock<IAuthorRepository>();
             this.mapperMock = new Mock<IMapper>();
 
