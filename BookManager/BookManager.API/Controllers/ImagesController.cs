@@ -1,4 +1,5 @@
-﻿using BookManager.API.Models.Domain;
+﻿using BookManager.API.CustomActionFilters;
+using BookManager.API.Models.Domain;
 using BookManager.API.Models.DTO;
 using BookManager.API.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,7 @@ namespace BookManager.API.Controllers
         }
 
         [HttpPost]
+        [ValidateModel]
         [Route("Upload")]
         public async Task<IActionResult> Upload([FromForm] ImageUploadRequestDto request)
         {

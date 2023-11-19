@@ -16,6 +16,6 @@ namespace BookManager.API.Models.DTO
         [Required]
         public int Year { get; set; }
 
-        public string? CoverImage { get; set; }
+        public int? CoverImage { get; set; }
     }
 }

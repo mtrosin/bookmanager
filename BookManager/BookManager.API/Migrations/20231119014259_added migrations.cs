@@ -7,7 +7,7 @@
 namespace BookManager.API.Migrations
 {
     /// <inheritdoc />
-    public partial class migrations : Migration
+    public partial class addedmigrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,6 +26,23 @@ namespace BookManager.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FileDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FileExtension = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FileSizeInBytes = table.Column<long>(type: "bigint", nullable: false),
+                    FilePath = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Books",
                 columns: table => new
                 {
@@ -34,7 +51,7 @@ namespace BookManager.API.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AuthorId = table.Column<int>(type: "int", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
-                    CoverImage = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CoverImage = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -62,9 +79,9 @@ namespace BookManager.API.Migrations
                 columns: new[] { "Id", "AuthorId", "CoverImage", "Title", "Year" },
                 values: new object[,]
                 {
-                    { 1, 1, "default.png", "Book 1", 2010 },
-                    { 2, 2, "default.png", "Book 2", 2011 },
-                    { 3, 3, "default.png", "Book 3", 2012 }
+                    { 1, 1, 1, "Book 1", 2010 },
+                    { 2, 2, 1, "Book 2", 2011 },
+                    { 3, 3, 1, "Book 3", 2012 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -78,6 +95,9 @@ namespace BookManager.API.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Books");
+
+            migrationBuilder.DropTable(
+                name: "Images");
 
             migrationBuilder.DropTable(
                 name: "Authors");

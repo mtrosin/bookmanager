@@ -49,7 +49,7 @@ namespace BookManager.API.Data
                     Title = "Book 1",
                     AuthorId = 1,
                     Year = 2010,
-                    CoverImage = "default.png"
+                    CoverImage = 1
                 },
                 new Book()
                 {
@@ -57,7 +57,7 @@ namespace BookManager.API.Data
                     Title = "Book 2",
                     AuthorId = 2,
                     Year = 2011,
-                    CoverImage = "default.png"
+                    CoverImage = 1
                 },
                 new Book()
                 {
@@ -65,7 +65,7 @@ namespace BookManager.API.Data
                     Title = "Book 3",
                     AuthorId = 3,
                     Year = 2012,
-                    CoverImage = "default.png"
+                    CoverImage = 1
                 }
             };
 
