@@ -5,6 +5,8 @@ using BookManager.API.Models.Domain;
 using BookManager.API.Models.DTO;
 using BookManager.API.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
+using Xunit;
 
 namespace BookManager.API.Controllers
 {
@@ -59,7 +61,7 @@ namespace BookManager.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = authorDto.Id }, authorDto);
         }
 
-        [HttpPut]
+        [HttpPatch]
         [ValidateModel]
         [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateAuthorRequestDto updateAuthorRequestDto)
@@ -89,5 +91,6 @@ namespace BookManager.API.Controllers
 
             return Ok(mapper.Map<AuthorDto>(authorDomainModel));
         }
+        
     }
 }

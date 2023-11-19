@@ -59,7 +59,7 @@ namespace BookManager.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = bookDto.Id }, bookDto);
         }
 
-        [HttpPut]
+        [HttpPatch]
         [ValidateModel]
         [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateBookRequestDto updateBookRequestDto)

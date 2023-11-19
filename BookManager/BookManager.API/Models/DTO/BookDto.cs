@@ -9,7 +9,7 @@ namespace BookManager.API.Models.DTO
         public string Title { get; set; }
         public int AuthorId { get; set; }
         public int Year { get; set; }
-        public string? CoverImage { get; set; }
+        public int? CoverImage { get; set; }
 
         public Author Author { get; set; }
     }
